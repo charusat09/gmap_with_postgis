@@ -1,0 +1,92 @@
+<style>
+  #map {
+   height: 500px;
+   width: 80%;
+   margin-left: 10%;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
+</style>	
+
+    <button type="button" class="btn btn-default save-polygon"> Save Polygon </button>
+
+    <div id="map"></div>
+    <script>
+      // This example requires the Drawing library. Include the libraries=drawing
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=drawing">
+        var map;
+        var infoWindow;
+        var vertices;
+        var polyArray = [];
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 19.119069, lng: 72.900670},
+          zoom: 14
+        });
+
+        var drawingManager = new google.maps.drawing.DrawingManager({
+          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          drawingControl: true,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [
+              google.maps.drawing.OverlayType.POLYGON
+            ]
+          }
+        });
+        drawingManager.setMap(map);
+        infoWindow = new google.maps.InfoWindow;
+
+        // google.maps.event.addListener(drawingManager, 'overlaycomplete', showArrays);
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+          if (event.type == google.maps.drawing.OverlayType.POLYGON) {
+            vertices = event.overlay.getPath();
+            console.log(vertices);
+
+
+            var contentString = '';
+
+              // Iterate over the vertices.
+              for (var i =0; i < vertices.getLength(); i++) {
+                var coordinateArray = [];
+                var xy = vertices.getAt(i);
+                coordinateArray[0] = xy.lng();
+                coordinateArray[1] = xy.lat();
+                polyArray.push(coordinateArray);
+                contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+                    xy.lng();
+              }
+
+              console.log(contentString)
+
+              // Replace the info window's content and position.
+              infoWindow.setContent(contentString);
+              infoWindow.setPosition(event.latLng);
+
+              infoWindow.open(map);
+          }
+        });
+      }
+
+      $(".save-polygon").on("click",function(){
+        console.log(polyArray);
+        $.ajax({
+          url: "<%= save_polygon_gmaps_path %>",
+          type:"GET",
+          data: {polygon: polyArray},
+          success: function(){
+            console.log("saved")
+          },
+          error: function(){
+             console.log('failure');
+          }
+        });
+      });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?AIzaSyAy-aeAcZK-K6tgvpxgP0paHYnC8oakqNM&libraries=drawing&callback=initMap"
+         async defer></script>

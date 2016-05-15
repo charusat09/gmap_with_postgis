@@ -1,0 +1,7 @@
+development:
+  adapter: postgis
+  encoding: unicode
+  database: gmap_with_postgis_development
+  username: postgres
+  password: 1234567890
+  pool: 5
