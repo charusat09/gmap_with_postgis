@@ -1,0 +1,40 @@
+<style>
+  #map {
+   height: 500px;
+   width: 80%;
+   margin-left: 10%;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
+</style>	
+Lat : <input id="lat" class="lat" name="lat" type="lat" /> <br/>
+Lng : <input id="lng" class="lng" name="lng" type="lng" /> <br/>
+
+<button type="button" class="btn btn-default show-polygon"> Show Polygon </button>
+
+<div id="map"></div>
+<script>
+	$(function(){
+		$(".show-polygon").on("click",function(){
+			var lat = $(".lat").val();
+			var lng = $(".lng").val();
+
+      $.ajax({
+        url: "<%= show_polygon_gmaps_path %>",
+        type:"GET",
+        data: {lat: lat,
+        			 lng: lng },
+        success: function(){
+          console.log("saved")
+        },
+        error: function(){
+           console.log('failure');
+        }
+      });
+    });
+	});
+</script>

@@ -1,0 +1,41 @@
+<style>
+  #map {
+   height: 500px;
+   width: 80%;
+   margin-left: 10%;
+   border-radius: 16px 16px;
+   border-color: #fff;
+   border-style: solid;
+   box-shadow: 2px 2px 10px #B1B1B1;
+   margin-top: 25px;
+   border-width: 7px;
+ }
+</style>	
+
+<script>
+  // This example creates a simple polygon representing the Bermuda Triangle.
+
+	function initMap() {
+	  var map = new google.maps.Map(document.getElementById('map'), {
+	    zoom: 15,
+	    center: {lat: 19.119069, lng: 72.900670},
+	    mapTypeId: google.maps.MapTypeId.TERRAIN
+	  });
+
+	  // Define the LatLng coordinates for the polygon's path.
+	  var triangleCoords = <%= hash_json.html_safe %>;
+
+ 	  // Construct the polygon.
+	  var bermudaTriangle = new google.maps.Polygon({
+	    paths: triangleCoords,
+	    strokeColor: '#FF0000',
+	    strokeOpacity: 0.8,
+	    strokeWeight: 2,
+	    fillColor: '#FF0000',
+	    fillOpacity: 0.35
+	  });
+	  bermudaTriangle.setMap(map);
+	}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?AIzaSyAy-aeAcZK-K6tgvpxgP0paHYnC8oakqNM&libraries=drawing&callback=initMap"
+     async defer></script>

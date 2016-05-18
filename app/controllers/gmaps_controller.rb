@@ -2,7 +2,33 @@ class GmapsController < ApplicationController
   def index
   end
 
-  def show
+  def show_map
+  	
+  end
+
+  def show_polygon
+  	lat = params[:lat]
+  	lng = params[:lng]
+  	query = "SELECT ST_Intersects('POINT("+ lng + " " + lat + ")'::geometry, polygon)"
+  	puts query
+  	polygon_obj = RewardLocation.where(query).first
+  	if polygon_obj.present?
+  		polygon = polygon_obj.polygon 
+			polygon_coordinates = RGeo::GeoJSON.encode(polygon)["coordinates"][0]
+	  	hash = []
+			polygon_coordinates.each do |coordinate|	
+				x = {lat: coordinate[1], lng: coordinate[0]}
+				hash << x
+			end
+			@hash_json = hash.to_json
+  		respond_to do |format|
+      	format.js
+    	end
+    elsif
+    	render plain: "Not Found"
+    end
+		
+
   end
 
   def save_polygon

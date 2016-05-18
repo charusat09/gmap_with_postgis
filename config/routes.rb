@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :gmaps do
     collection do 
       get 'save_polygon'
+      get 'show_map'
+      get 'show_polygon'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
