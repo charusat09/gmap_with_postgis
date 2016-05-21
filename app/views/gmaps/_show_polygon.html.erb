@@ -17,7 +17,7 @@
   var polyArray = [];
 	function initMap() {
 	  var map = new google.maps.Map(document.getElementById('map'), {
-	    zoom: 15,
+	    zoom: 8,
 	    center: {lat: 19.119069, lng: 72.900670},
 	    mapTypeId: google.maps.MapTypeId.TERRAIN
 	  });
@@ -72,7 +72,7 @@
 
 	$(".save-polygon").on("click",function(){
     console.log(polyArray);
-  var polyName = "<%= polygon_obj_name %>";
+	  var polyName = "<%= polygon_obj_name %>";
 
     $.ajax({
       url: "<%= save_updated_polygon_gmaps_path %>",

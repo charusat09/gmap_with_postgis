@@ -6,30 +6,35 @@ class GmapsController < ApplicationController
   	
   end
 
+  def all_polygons
+    @all_polygons_json = []
+    @all_polygons = RewardLocation.all
+    @all_polygons.each do |poly| 
+      temp = create_json poly
+      @all_polygons_json << temp
+    end
+  end
+
   def show_polygon
   	lat = params[:lat]
   	lng = params[:lng]
-  	query = "SELECT ST_Intersects('POINT("+ lng + " " + lat + ")'::geometry, polygon)"
-  	puts query
-  	polygon_obj = RewardLocation.where(query).first
+    name = params[:name]
+    if lat.present? && lng.present?
+      query = "SELECT ST_Intersects('POINT("+ lng + " " + lat + ")'::geometry, polygon)"
+      polygon_obj = RewardLocation.where(query).first
+      puts query
+    else
+      polygon_obj = RewardLocation.where(name: name).first
+    end
   	if polygon_obj.present?
-      @polygon_obj_name = polygon_obj.name 
-  		polygon = polygon_obj.polygon 
-			polygon_coordinates = RGeo::GeoJSON.encode(polygon)["coordinates"][0]
-	  	hash = []
-			polygon_coordinates.each do |coordinate|	
-				x = {lat: coordinate[1], lng: coordinate[0]}
-				hash << x
-			end
-			@hash_json = hash.to_json
+      @polygon_obj_name = polygon_obj.name 		
+			@hash_json = create_json polygon_obj
   		respond_to do |format|
       	format.js
     	end
     elsif
     	render plain: "Not Found"
     end
-		
-
   end
 
   def save_polygon
@@ -77,6 +82,18 @@ class GmapsController < ApplicationController
         format.js
       end
     end
-
   end
+
+  private
+
+    def create_json polygon_obj
+      polygon = polygon_obj.polygon 
+      polygon_coordinates = RGeo::GeoJSON.encode(polygon)["coordinates"][0]
+      hash = []
+      polygon_coordinates.each do |coordinate|  
+        x = {lat: coordinate[1], lng: coordinate[0]}
+        hash << x
+      end
+      hash.to_json
+    end
 end

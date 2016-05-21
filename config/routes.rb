@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'show_map'
       get 'show_polygon'
       get 'save_updated_polygon'
+      get 'all_polygons'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

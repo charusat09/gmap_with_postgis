@@ -10,9 +10,19 @@
    margin-top: 25px;
    border-width: 7px;
  }
+ .map-form {
+  margin-left: 10%;
+ }
 </style>	
-    <input id="map-name" class="map-name" /> <br/>
-    <button type="button" class="btn btn-default save-polygon"> Save Polygon </button>
+    <div class="map-form">
+      <div class="form-group">
+        <div class="col-sm-6">
+          <input id="map-name" class="map-name form-control" placeholder="polygon name" /> <br/>
+        </div>
+      </div>
+    </div>
+
+      <button type="button" class="btn btn-default save-polygon"> Save Polygon </button>
 
     <div id="map"></div>
     <script>
