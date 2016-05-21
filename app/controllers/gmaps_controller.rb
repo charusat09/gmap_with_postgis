@@ -52,4 +52,7 @@ class GmapsController < ApplicationController
       end
     end
   end
+
+  def save_updated_polygon
+  end
 end
