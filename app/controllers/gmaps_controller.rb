@@ -69,7 +69,7 @@ class GmapsController < ApplicationController
     query_string.chomp!(",")
     query_string += "))"
     saved_polygon = RewardLocation.where(name: params[:name]).first
-    new_polygon = RewardLocation.update(polygon: query_string, name: params[:name])
+    new_polygon = saved_polygon.update(polygon: query_string, name: params[:name])
 
 
     respond_to do |format|
