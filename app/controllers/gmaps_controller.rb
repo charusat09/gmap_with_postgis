@@ -54,5 +54,6 @@ class GmapsController < ApplicationController
   end
 
   def save_updated_polygon
+    puts "got it"
   end
 end
