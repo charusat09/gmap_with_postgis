@@ -1,1 +1,1 @@
-$(".save-polygon").html("<%= j(render(:partial => "save_updated_polygon", :locals => {})) %>");
+$(".save-polygon").html("<%= j(render(:partial => "save_updated_polygon", :locals => {polygon_obj_name: @polygon_obj_name})) %>");

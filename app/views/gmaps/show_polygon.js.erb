@@ -1,1 +1,1 @@
-$("#map").html("<%= j(render(:partial => "show_polygon", :locals => {hash_json: @hash_json})) %>");
+$("#map").html("<%= j(render(:partial => "show_polygon", :locals => {hash_json: @hash_json, polygon_obj_name: @polygon_obj_name})) %>");

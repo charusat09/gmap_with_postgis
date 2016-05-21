@@ -72,10 +72,13 @@
 
 	$(".save-polygon").on("click",function(){
     console.log(polyArray);
+  var polyName = "<%= polygon_obj_name %>";
+
     $.ajax({
       url: "<%= save_updated_polygon_gmaps_path %>",
       type:"GET",
-      data: {polygon: polyArray},
+      data: {polygon: polyArray,
+      			 name: polyName},
       success: function(){
         console.log("saved")
       },
