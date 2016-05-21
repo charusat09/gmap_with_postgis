@@ -11,7 +11,7 @@
    border-width: 7px;
  }
 </style>	
-
+    <input id="map-name" class="map-name" /> <br/>
     <button type="button" class="btn btn-default save-polygon"> Save Polygon </button>
 
     <div id="map"></div>
@@ -76,10 +76,12 @@
 
       $(".save-polygon").on("click",function(){
         console.log(polyArray);
+        var mapName = $("#map-name").val();
         $.ajax({
           url: "<%= save_polygon_gmaps_path %>",
           type:"GET",
-          data: {polygon: polyArray},
+          data: {polygon: polyArray,
+                 name: mapName},
           success: function(){
             console.log("saved")
           },

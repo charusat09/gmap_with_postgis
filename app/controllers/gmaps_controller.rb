@@ -45,9 +45,11 @@ class GmapsController < ApplicationController
   	query_string += polygon_shape["0"][1]
   	query_string += "))"
 
+    polygon = RewardLocation.create(polygon: query_string, name: params[:name])
+
 
   	respond_to do |format|
-      if RewardLocation.create(polygon: query_string)
+      if polygon
         format.js
       end
     end
